@@ -929,6 +929,7 @@ public final class MaterialList extends AbstractList<Material> {
 
     static {
         FIRE_SMELT_MAP.put(STONE, "STONE|0.1");
+        FIRE_SMELT_MAP.put(SAND, "GLASS|0.1");
         FIRE_SMELT_MAP.put(DIORITE, "POLISHED_DIORITE|0.1");
         FIRE_SMELT_MAP.put(ANDESITE, "POLISHED_ANDESITE|0.1");
         FIRE_SMELT_MAP.put(GRANITE, "POLISHED_GRANITE|0.1");
