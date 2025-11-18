@@ -930,6 +930,9 @@ public final class MaterialList extends AbstractList<Material> {
     static {
         FIRE_SMELT_MAP.put(STONE, "STONE|0.1");
         FIRE_SMELT_MAP.put(SAND, "GLASS|0.1");
+        FIRE_SMELT_MAP.put(RAW_IRON_BLOCK, "IRON_BLOCK|6.3");
+        FIRE_SMELT_MAP.put(RAW_GOLD_BLOCK, "GOLD_BLOCK|9.0");
+        FIRE_SMELT_MAP.put(RAW_COPPER_BLOCK, "COPPER_BLOCK|6.3");
         FIRE_SMELT_MAP.put(DIORITE, "POLISHED_DIORITE|0.1");
         FIRE_SMELT_MAP.put(ANDESITE, "POLISHED_ANDESITE|0.1");
         FIRE_SMELT_MAP.put(GRANITE, "POLISHED_GRANITE|0.1");
@@ -973,6 +976,7 @@ public final class MaterialList extends AbstractList<Material> {
             MAGMA_BLOCK,
             BLACKSTONE,
             CRIMSON_NYLIUM,
+            OBSIDIAN,
         },
         ORES,
         TERRACOTTA
@@ -991,6 +995,9 @@ public final class MaterialList extends AbstractList<Material> {
             SOUL_SAND,
             CLAY,
             MUD,
+            SNOW,
+            SNOW_BLOCK,
+            POWDER_SNOW,
             MUDDY_MANGROVE_ROOTS,
             ROOTED_DIRT,
             SUSPICIOUS_SAND,

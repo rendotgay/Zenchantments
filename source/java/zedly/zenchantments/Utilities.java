@@ -74,7 +74,7 @@ public final class Utilities {
         return Integer.MAX_VALUE;
     }
 
-    public static void damageItemStackRespectUnbreaking(final @NotNull Player player, final int damage, final EquipmentSlot slot) {
+    public static void damageItemStackRespectUnbreaking(final @NotNull Player player, final double damage, final EquipmentSlot slot) {
         requireNonNull(player);
 
         final PlayerInventory inventory = player.getInventory();
@@ -82,7 +82,19 @@ public final class Utilities {
         final int unbreakingLevel = getUnbreakingLevel(heldItem);
         int totalDamageApplied = 0;
 
-        for (var i = 0; i < damage; i++) {
+        // Handle fractional damage probabilistically
+        int fullDamage = (int) damage;
+        double fractionalPart = damage - fullDamage;
+
+        // Add full damage attempts
+        for (var i = 0; i < fullDamage; i++) {
+            if (decideRandomlyIfDamageToolRespectUnbreaking(unbreakingLevel)) {
+                totalDamageApplied++;
+            }
+        }
+
+        // Handle fractional damage with probability
+        if (fractionalPart > 0 && Math.random() < fractionalPart) {
             if (decideRandomlyIfDamageToolRespectUnbreaking(unbreakingLevel)) {
                 totalDamageApplied++;
             }
@@ -378,7 +390,6 @@ public final class Utilities {
             if (effect.getAmplifier() > intensity || effect.getDuration() > length) {
                 return;
             }
-            entity.removePotionEffect(effectType);
         }
 
         entity.addPotionEffect(new PotionEffect(effectType, length, intensity));

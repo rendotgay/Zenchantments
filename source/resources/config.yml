@@ -393,6 +393,13 @@ enchantments:
               max-level: 5
               cooldown: 0
               power: 1.0
+      - Tunnel:
+              probability: 1.0
+              tools: Pickaxe, Shovel
+              name: Shred
+              max-level: 1
+              cooldown: 0
+              power: 1.0
       - Siphon:
               probability: 3.0
               tools: Sword, Bow, Trident

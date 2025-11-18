@@ -77,6 +77,7 @@ public class ZenchantmentClassStorage {
         Tracer.class,
         Transformation.class,
         Trough.class,
+        Tunnel.class,
         Unrepairable.class,
         Variety.class,
         Vortex.class,

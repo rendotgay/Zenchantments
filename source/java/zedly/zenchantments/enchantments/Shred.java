@@ -20,7 +20,7 @@ import static java.util.Objects.requireNonNull;
 import static org.bukkit.Material.*;
 import static zedly.zenchantments.MaterialList.*;
 
-@AZenchantment(runInSlots = Slots.MAIN_HAND, conflicting = {Pierce.class, Switch.class})
+@AZenchantment(runInSlots = Slots.MAIN_HAND, conflicting = {Pierce.class, Switch.class, Tunnel.class})
 public final class Shred extends Zenchantment {
     @Override
     public boolean onBlockBreak(final @NotNull BlockBreakEvent event, final int level, final EquipmentSlot slot) {
@@ -72,45 +72,7 @@ public final class Shred extends Zenchantment {
             return;
         }
 
-        if (config.getShredDropType() == 0) {
-            WorldInteractionUtil.breakBlock(relativeBlock, player);
-        } else {
-            final BlockShredEvent event = new BlockShredEvent(relativeBlock, player);
-            ZenchantmentsPlugin.getInstance().getServer().getPluginManager().callEvent(event);
-            if (event.isCancelled()) {
-                return;
-            }
-            // In case another plugin changed the block
-            originalType = relativeBlock.getType();
-
-            if (config.getShredDropType() == 1) {
-                if (NETHER_ORES.contains(originalType)) {
-                    relativeBlock.setType(NETHERRACK);
-                } else if (DEEPSLATE_ORES.contains(originalType)) {
-                    relativeBlock.setType(DEEPSLATE);
-                } else if (MaterialList.ORES.contains(relativeBlock.getType())) {
-                    relativeBlock.setType(STONE);
-                }
-
-                if (event.isCancelled() || event.getBlock().getType() == Material.AIR) {
-                    return;
-                }
-
-                Zenchantment.applyForTool(
-                    player,
-                    usedHand,
-                    (ench, level, slot) -> ench.onBlockBreak(event, level, slot)
-                );
-
-                if (event.isCancelled()) {
-                    return;
-                }
-
-                relativeBlock.breakNaturally();
-            } else {
-                relativeBlock.setType(Material.AIR);
-            }
-        }
+        WorldInteractionUtil.breakBlock(relativeBlock, player);
 
         Sound sound = null;
         switch (originalType) {

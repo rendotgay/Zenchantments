@@ -45,19 +45,7 @@ public class WorldConfiguration implements zedly.zenchantments.api.configuration
         enchantColor = enchantColor != null ? enchantColor : ChatColor.GRAY;
         curseColor = curseColor != null ? curseColor : ChatColor.RED;
 
-        switch ((String) yamlConfig.get("shred-drops")) {
-            case "all":
-                shredDrops = 0;
-                break;
-            case "block":
-                shredDrops = 1;
-                break;
-            case "none":
-                shredDrops = 2;
-                break;
-            default:
-                shredDrops = 0;
-        }
+        shredDrops = 0;
 
         // Transform nested generic data types of YamlConfiguration into fixed types
         Set<Zenchantment> enchantments = new HashSet<>();
