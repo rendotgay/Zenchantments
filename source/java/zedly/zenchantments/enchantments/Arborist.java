@@ -8,6 +8,8 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import zedly.zenchantments.*;
 
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.bukkit.Material.*;
@@ -15,6 +17,20 @@ import static zedly.zenchantments.MaterialList.*;
 
 @AZenchantment(runInSlots = Slots.MAIN_HAND , conflicting = {})
 public final class Arborist extends Zenchantment {
+    private static final Map<Material, Material> LEAF_TO_SAPLING = Map.ofEntries(
+        Map.entry(OAK_LEAVES, OAK_SAPLING),
+        Map.entry(BIRCH_LEAVES, BIRCH_SAPLING),
+        Map.entry(SPRUCE_LEAVES, SPRUCE_SAPLING),
+        Map.entry(ACACIA_LEAVES, ACACIA_SAPLING),
+        Map.entry(DARK_OAK_LEAVES, DARK_OAK_SAPLING),
+        Map.entry(JUNGLE_LEAVES, JUNGLE_SAPLING),
+        Map.entry(AZALEA_LEAVES, AZALEA),
+        Map.entry(FLOWERING_AZALEA_LEAVES, FLOWERING_AZALEA),
+        Map.entry(MANGROVE_LEAVES, MANGROVE_PROPAGULE),
+        Map.entry(CHERRY_LEAVES, CHERRY_SAPLING),
+        Map.entry(PALE_OAK_LEAVES, PALE_OAK_SAPLING)
+    );
+
     @Override
     public boolean onBlockBreak(final @NotNull BlockBreakEvent event, final int level, final EquipmentSlot slot) {
         final Block block = event.getBlock();
@@ -24,16 +40,15 @@ public final class Arborist extends Zenchantment {
             return false;
         }
 
-        // Crudely get the index in the array of materials.
-        // TODO: Make this not awful.
-        int index = LEAVES.indexOf(material);
-
+        // Check probability based on level and power
         if (!(ThreadLocalRandom.current().nextInt(10) >= (9 - level) / (this.getPower() + 0.001))) {
             return false;
         }
 
-        if (ThreadLocalRandom.current().nextInt(3) % 3 == 0) {
-            event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), new ItemStack(SAPLINGS.get(index), 1));
+        // Get the corresponding sapling from the map (null-safe, but all leaves should have entries)
+        Material sapling = LEAF_TO_SAPLING.get(material);
+        if (sapling != null && ThreadLocalRandom.current().nextInt(3) % 3 == 0) {
+            event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), new ItemStack(sapling, 1));
         }
 
         if (ThreadLocalRandom.current().nextInt(3) % 3 == 0) {
